@@ -25,7 +25,7 @@
 
     <script>
         // Set the correct answer for the riddle here
-        const correctAnswer = "bine";  // Edit this answer as needed
+        const correctAnswer = "FoarteBine";  // Edit this answer as needed
 
         function checkAnswer() {
             const userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
