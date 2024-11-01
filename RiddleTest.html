@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editable Riddle Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
+        .riddle { margin-bottom: 20px; }
+        .feedback { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Riddle Quiz</h1>
+
+    <div class="riddle">
+        <!-- Edit the riddle question below -->
+        <p id="riddleQuestion">Ce faci aici?</p>
+        
+        <input type="text" id="userAnswer" placeholder="Your answer">
+        <button onclick="checkAnswer()">Submit</button>
+        
+        <p class="feedback" id="feedbackMessage"></p>
+    </div>
+
+    <script>
+        // Set the correct answer for the riddle here
+        const correctAnswer = "bine";  // Edit this answer as needed
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
+            const feedbackMessage = document.getElementById("feedbackMessage");
+
+            if (userAnswer === correctAnswer) {
+                feedbackMessage.textContent = "Correct!";
+                feedbackMessage.style.color = "green";
+            } else {
+                feedbackMessage.textContent = "Incorrect. Try again!";
+                feedbackMessage.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
