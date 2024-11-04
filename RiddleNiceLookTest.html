@@ -117,8 +117,8 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left">
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right">
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left"> <!-- Replace with your penguin image URL -->
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right"> <!-- Replace with your penguin image URL -->
         
         <h1>Christmas Riddle Quiz 🎅</h1>
         <p id="riddleQuestion">Cati bani vrei sa faci luna asta?</p>
@@ -137,12 +137,12 @@
     </div>
 
     <script>
-        const correctAnswer = "multi"; // Use lowercase for consistent comparison
-        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec';
+        const correctAnswer = "multi"; // Set the correct answer in lowercase
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec'; // Replace with your Google Apps Script URL
 
         function submitAnswer() {
             const userName = document.getElementById("userName").value.trim();
-            const userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
+            const userAnswer = document.getElementById("userAnswer").value.trim(); // Trim the input
             const feedbackMessage = document.getElementById("feedbackMessage");
 
             // Check if name is provided
@@ -152,8 +152,17 @@
                 return;
             }
 
+            // Normalize both the user's answer and the correct answer to lowercase
+            const normalizedUserAnswer = userAnswer.toLowerCase();
+            const normalizedCorrectAnswer = correctAnswer.toLowerCase(); // Keep correctAnswer as lowercase
+
+            // Debugging: Log user answer and correct answer
+            console.log("User Name:", userName);
+            console.log("User Answer:", normalizedUserAnswer);
+            console.log("Correct Answer:", normalizedCorrectAnswer);
+
             // Check if the answer is correct
-            const isCorrect = userAnswer === correctAnswer;
+            const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
 
             // Provide feedback based on the answer
             if (isCorrect) {
