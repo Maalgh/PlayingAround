@@ -20,6 +20,7 @@
             align-items: center;
             height: 100vh;
             padding: 20px;
+            overflow: hidden;
         }
         .container {
             background: #fff;
@@ -31,15 +32,6 @@
             text-align: center;
             border: 4px solid #ff5252;
             position: relative;
-            overflow: hidden;
-        }
-        .container:before {
-            content: "🎄";
-            font-size: 2.5em;
-            position: absolute;
-            top: -25px;
-            left: 50%;
-            transform: translateX(-50%);
         }
         h1 {
             color: #ff5252;
@@ -104,15 +96,15 @@
             position: absolute;
             width: 60px;
             height: 60px;
-            top: 0;
+            top: 50%;
             transform: translateY(-50%);
             z-index: 1;
         }
         .penguin-left {
-            left: -20px;
+            left: -30px;
         }
         .penguin-right {
-            right: -20px;
+            right: -30px;
         }
         
         /* Christmas Decorations */
@@ -125,11 +117,11 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left"> <!-- Replace with your own penguin image URL -->
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right> <!-- Replace with your own penguin image URL -->
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left"> <!-- Replace with your penguin image URL -->
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right"> <!-- Replace with your penguin image URL -->
         
         <h1>Christmas Riddle Quiz 🎅</h1>
-        <p id="riddleQuestion">Cati bani vrei sa faci anul acesta?</p>
+        <p id="riddleQuestion">Cati bani vrei sa faci luna asta?</p>
         
         <div class="form-group">
             <input type="text" id="userName" placeholder="Enter your name">
@@ -145,7 +137,7 @@
     </div>
 
     <script>
-        const correctAnswer = "toti"; // Edit this answer as needed
+        const correctAnswer = "Pe toti"; // Edit this answer as needed
         const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec'; // Replace with your Google Apps Script URL
 
         function submitAnswer() {
@@ -162,10 +154,10 @@
             const isCorrect = userAnswer === correctAnswer;
 
             if (isCorrect) {
-                feedbackMessage.textContent = `Stai Asea ca iti dau, ${userName}! 🎉`;
+                feedbackMessage.textContent = `Stai asea ca iti trimit, ${userName}! 🎉`;
                 feedbackMessage.className = "feedback correct";
             } else {
-                feedbackMessage.textContent = `Ai vrea tu, ${userName}. Mai incearca!`;
+                feedbackMessage.textContent = `Ai gresit buzunaru baiatu meu, ${userName}. Mai incearca!`;
                 feedbackMessage.className = "feedback incorrect";
             }
 
