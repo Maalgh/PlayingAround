@@ -3,41 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Riddle Quiz</title>
+    <title>Riddle Quiz</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; }
-        .riddle { margin-bottom: 20px; }
-        .feedback { font-weight: bold; }
+        /* Base Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        p {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 1.1em;
+        }
+        
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+        button {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Feedback Styling */
+        .feedback {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+        .feedback.correct {
+            color: #4CAF50;
+        }
+        .feedback.incorrect {
+            color: #e53935;
+        }
     </style>
 </head>
 <body>
-    <h1>Riddle Quiz</h1>
-
-    <div class="riddle">
-        <!-- Edit the riddle question below -->
-        <p id="riddleQuestion">Ce faci aici?</p>
+    <div class="container">
+        <h1>Riddle Quiz</h1>
+        <p id="riddleQuestion">Ce cauti aici?</p>
         
-        <input type="text" id="userAnswer" placeholder="Your answer">
-        <button onclick="checkAnswer()">Submit</button>
+        <div class="form-group">
+            <input type="text" id="userName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <input type="text" id="userAnswer" placeholder="Enter your answer">
+        </div>
+        <button onclick="submitAnswer()">Submit</button>
         
         <p class="feedback" id="feedbackMessage"></p>
     </div>
 
     <script>
-        // Set the correct answer for the riddle here
-        const correctAnswer = "bine";  // Edit this answer as needed
+        const correctAnswer = "bani"; // Edit this answer as needed
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec'; // Replace with your Google Apps Script URL
 
-        function checkAnswer() {
+        function submitAnswer() {
+            const userName = document.getElementById("userName").value.trim();
             const userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
             const feedbackMessage = document.getElementById("feedbackMessage");
 
-            if (userAnswer === correctAnswer) {
-                feedbackMessage.textContent = "Correct!";
-                feedbackMessage.style.color = "green";
-            } else {
-                feedbackMessage.textContent = "Incorrect. Try again!";
-                feedbackMessage.style.color = "red";
+            if (userName === "") {
+                feedbackMessage.textContent = "Please enter your name.";
+                feedbackMessage.className = "feedback incorrect";
+                return;
             }
+
+            const isCorrect = userAnswer === correctAnswer;
+
+            if (isCorrect) {
+                feedbackMessage.textContent = `Correct, ${userName}! 🎉`;
+                feedbackMessage.className = "feedback correct";
+            } else {
+                feedbackMessage.textContent = `Incorrect, ${userName}. Try again!`;
+                feedbackMessage.className = "feedback incorrect";
+            }
+
+            // Send data to Google Sheets via Apps Script
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    name: userName,
+                    answer: userAnswer,
+                    isCorrect: isCorrect
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
         }
     </script>
 </body>
