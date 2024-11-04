@@ -117,8 +117,8 @@
 </head>
 <body>
     <div class="container">
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left"> <!-- Replace with your penguin image URL -->
-        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right"> <!-- Replace with your penguin image URL -->
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-left">
+        <img src="https://www.creativefabrica.com/wp-content/uploads/2022/12/11/Cute-Penguin-Listening-To-Music-With-Headphones-Cartoon-Vector-Illustration-51674178-1.png" class="penguin penguin-right">
         
         <h1>Christmas Riddle Quiz 🎅</h1>
         <p id="riddleQuestion">Cati bani vrei sa faci luna asta?</p>
@@ -137,22 +137,25 @@
     </div>
 
     <script>
-        const correctAnswer = "Multi"; // Edit this answer as needed
-        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec'; // Replace with your Google Apps Script URL
+        const correctAnswer = "multi"; // Use lowercase for consistent comparison
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec';
 
         function submitAnswer() {
             const userName = document.getElementById("userName").value.trim();
             const userAnswer = document.getElementById("userAnswer").value.toLowerCase().trim();
             const feedbackMessage = document.getElementById("feedbackMessage");
 
+            // Check if name is provided
             if (userName === "") {
                 feedbackMessage.textContent = "Please enter your name.";
                 feedbackMessage.className = "feedback incorrect";
                 return;
             }
 
+            // Check if the answer is correct
             const isCorrect = userAnswer === correctAnswer;
 
+            // Provide feedback based on the answer
             if (isCorrect) {
                 feedbackMessage.textContent = `Stai asea ca iti trimit, ${userName}! 🎉`;
                 feedbackMessage.className = "feedback correct";
