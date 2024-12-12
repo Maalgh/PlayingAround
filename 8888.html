@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Santa Hiding Slotomania Treasure Hunt?</title>
+    <style>
+        /* Base Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: url('https://www.transparenttextures.com/patterns/snow.png'), #d1f2eb;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid #ff5252;
+            position: relative;
+        }
+        h1 {
+            color: #ff5252;
+            margin-bottom: 15px;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px #d1d8e0;
+        }
+        p {
+            margin-bottom: 20px;
+            color: #2f3542;
+            font-size: 1.1em;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 2px solid #ff5252;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #ff7979;
+            box-shadow: 0 0 5px rgba(255, 82, 82, 0.5);
+            outline: none;
+        }
+        button {
+            padding: 12px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        /* Feedback Styling */
+        .feedback {
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1.2em;
+        }
+        .feedback.correct {
+            color: #27ae60;
+        }
+        .feedback.incorrect {
+            color: #e74c3c;
+        }
+
+        /* Penguin Decorations */
+        .penguin {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        .penguin-left {
+            left: -30px;
+        }
+        .penguin-right {
+            right: -30px;
+        }
+        
+        /* Christmas Decorations */
+        .container .decorations {
+            margin-top: 20px;
+            color: #ff5252;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>What's Santa Hiding Slotomania Treasure Hunt?🎅</h1>
+        <p id="riddleQuestion">You are so close to the finish line.Do you think Santa has a girl other than Mrs Claus?</p>
+        
+        <div class="form-group">
+            <input type="text" id="userName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <input type="text" id="userAnswer" placeholder="Enter your answer">
+        </div>
+        <button onclick="submitAnswer()">Submit Answer</button>
+        
+        <p class="feedback" id="feedbackMessage"></p>
+        
+        <div class="decorations">🚗🚀🚗🚀🚗🚀</div>
+    </div>
+
+    <script>
+        const correctAnswer = "No"; // Set the correct answer in lowercase
+        const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxgiMj2osgKmP9J_F1Hr77buu0IzIJfH6ksc9g4P-IkA0mgBSzkdIXKAEfEsc8hZnFU/exec'; // Replace with your Google Apps Script URL
+
+        function submitAnswer() {
+            const userName = document.getElementById("userName").value.trim();
+            const userAnswer = document.getElementById("userAnswer").value.trim(); // Trim the input
+            const feedbackMessage = document.getElementById("feedbackMessage");
+
+            // Check if name is provided
+            if (userName === "") {
+                feedbackMessage.textContent = "Please enter your name.";
+                feedbackMessage.className = "feedback incorrect";
+                return;
+            }
+
+            // Normalize both the user's answer and the correct answer to lowercase
+            const normalizedUserAnswer = userAnswer.toLowerCase();
+            const normalizedCorrectAnswer = correctAnswer.toLowerCase(); // Keep correctAnswer as lowercase
+
+            // Debugging: Log user answer and correct answer
+            console.log("User Name:", userName);
+            console.log("User Answer:", normalizedUserAnswer);
+            console.log("Correct Answer:", normalizedCorrectAnswer);
+
+            // Check if the answer is correct
+            const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+
+            // Provide feedback based on the answer
+            if (isCorrect) {
+                feedbackMessage.textContent = `Phew, that's true, Santa would never do that! It looks like the man in the photos was actually Unchiu. You did see him a few days ago so of course you'd recognize him. Anyway, take a selfie with your team near the Reception Christmas tree and send it to Marius. It'll mark the end of your investigation.`;
+                feedbackMessage.className = "feedback correct";
+            } else {
+                feedbackMessage.textContent = `${userName}, You don't trust Santa at all :( The man in the photos was Unchiu disguised as Santa, and you just saw him last week... Anyway, take a selfie with your team near the Reception Christmas tree and send it to Marius. It'll mark the end of your investigation.`;
+                feedbackMessage.className = "feedback incorrect";
+            }
+
+            // Send data to Google Sheets via Apps Script
+            fetch(googleScriptUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    name: userName,
+                    answer: userAnswer,
+                    isCorrect: isCorrect
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
